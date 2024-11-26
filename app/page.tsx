@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   return (
@@ -11,20 +10,9 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="flex space-x-4 mt-6">
-        <Link
-          href="https://docs.zink-lang.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button className="px-4 py-2 border border-gray-300 rounded">
-            Docs
-          </Button>
-        </Link>
-        <Link href="/budgets">
-          <Button className="px-4 py-2 border border-gray-300 rounded">
-            Budgets
-          </Button>
+      <section className="flex space-x-4 mt-3">
+        <Link href="/budgets" className="hover:underline">
+          Contribute to the future, earn rewards 💰
         </Link>
       </section>
     </main>
