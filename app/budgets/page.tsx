@@ -1,23 +1,31 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
+const budgetLabels = [
+  { label: "50 USDC", value: "budget-$50" },
+  { label: "100 USDC", value: "budget-$100" },
+  { label: "150 USDC", value: "budget-$150" },
+];
 
 export default function Budgets() {
   const [issues, setIssues] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState(budgetLabels[0].value); // Default to the first tab
 
   useEffect(() => {
     const fetchIssues = async () => {
       try {
         const response = await fetch(
-          "https://api.github.com/repos/zink-lang/zink/issues"
+          `https://api.github.com/repos/zink-lang/zink/issues?labels=${activeTab}&state=open`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const data = await response.json();
-        setIssues(data);
+        const budgetIssues = await response.json();
+        setIssues(budgetIssues);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -26,16 +34,16 @@ export default function Budgets() {
     };
 
     fetchIssues();
-  }, []);
+  }, [activeTab]); // Fetch issues whenever the active tab changes
 
   return (
     <div className="flex flex-col h-page max-w-4xl mx-auto p-4">
       <h1 className="text-4xl font-bold mb-4 text-left">Budgets</h1>
-      <p className=" mb-4 text-left">
+      <p className="mb-4 text-left">
         The budget issues on this page are designed to onboard new contributors
         to{" "}
         <Link
-          href="https://github/zink-lang/zink"
+          href="https://github.com/zink-lang/zink"
           target="_blank"
           className="hover:underline"
         >
@@ -43,6 +51,21 @@ export default function Budgets() {
         </Link>
         . You can also create new issues and propose them as budget items!
       </p>
+
+      {/* Tabs for Budget Labels */}
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList>
+          {budgetLabels.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value}>
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <TabsContent value={activeTab}>
+          {/* Content can be added here if needed */}
+        </TabsContent>
+      </Tabs>
+
       {loading && <p>Loading issues...</p>}
       {error && <p className="text-red-500">{error}</p>}
       <ul className="mt-4 space-y-4">
@@ -55,7 +78,7 @@ export default function Budgets() {
               href={issue.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
+              className="hover:underline"
             >
               <h2 className="text-xl font-semibold">{issue.title}</h2>
             </a>
