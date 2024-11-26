@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GitHubLogoIcon, ReaderIcon } from "@radix-ui/react-icons";
+import { FaTelegramPlane } from "react-icons/fa";
 
 export default function Header() {
   return (
@@ -23,6 +24,14 @@ export default function Header() {
           className="text-white hover:text-gray-300"
         >
           <GitHubLogoIcon width={16} height={16} />
+        </Link>
+        <Link
+          href="https://t.me/zinklang"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-gray-300"
+        >
+          <FaTelegramPlane width={16} height={16} />
         </Link>
       </div>
     </header>

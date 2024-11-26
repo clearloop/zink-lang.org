@@ -12,7 +12,7 @@ export default function Home() {
 
       <section className="flex space-x-4 mt-3">
         <Link href="/budgets" className="hover:underline">
-          Contribute to the future, earn rewards 💰
+          Join the revolution with rewards 💰
         </Link>
       </section>
     </main>
