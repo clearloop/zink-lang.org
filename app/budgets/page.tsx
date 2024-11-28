@@ -19,7 +19,7 @@ export default function Budgets() {
     const fetchIssues = async () => {
       try {
         const response = await fetch(
-          `https://api.github.com/repos/zink-lang/zink/issues?labels=${activeTab}&state=open`
+          `https://api.github.com/repos/zink-lang/zink/issues?labels=${activeTab}&state=all`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -72,19 +72,32 @@ export default function Budgets() {
         {issues.map((issue) => (
           <li
             key={issue.id}
-            className="p-4 border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            className={`p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow ${
+              issue.state === "closed" ? "border-gray-800" : "border-gray-300"
+            }`} // Darker border for closed issues
           >
-            <a
-              href={issue.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              <h2 className="text-xl font-semibold">{issue.title}</h2>
-            </a>
-            <p className="text-gray-500">
-              #{issue.number} opened by {issue.user.login}
-            </p>
+            <div className="flex items-center">
+              <a
+                href={issue.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline flex-grow"
+              >
+                <h2 className="text-xl font-semibold">
+                  {issue.title} #{issue.number}
+                </h2>
+              </a>
+              {issue.assignee && (
+                <div className="flex items-center ml-2 space-x-2">
+                  <img
+                    src={issue.assignee.avatar_url}
+                    alt={`${issue.assignee.login}'s avatar`}
+                    className="w-6 h-6 rounded-full ml-1" // Avatar styling
+                  />
+                  <span className="text-gray-500">{issue.assignee.login}</span>
+                </div>
+              )}
+            </div>
             {issue.labels.length > 0 && (
               <div className="mt-2">
                 {issue.labels.map((label: any) => (
