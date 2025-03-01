@@ -11,7 +11,7 @@ export default function Home() {
       </section>
 
       <section className="flex space-x-4 mt-3">
-        <Link href="/budgets" className="hover:underline">
+        <Link href="/bounties" className="hover:underline">
           Join the revolution with rewards 💰
         </Link>
       </section>
