@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import Image from "next/image";
 
 const budgetLabels = [
   { label: "50 USDC", value: "bounty-$50" },
@@ -92,7 +93,7 @@ export default function Budgets() {
               </a>
               {issue.assignee && (
                 <div className="flex items-center ml-2 space-x-2">
-                  <img
+                  <Image
                     src={issue.assignee.avatar_url}
                     alt={`${issue.assignee.login}'s avatar`}
                     className="w-6 h-6 rounded-full ml-1" // Avatar styling

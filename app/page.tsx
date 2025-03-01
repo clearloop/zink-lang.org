@@ -18,15 +18,15 @@ export default function Home() {
       </section>
 
       <section className="flex space-x-4 mt-8 border border-1 px-6 py-4 rounded-lg">
-        🦀 We're hiring, contact{" "}
+        🦀 We&apos;re hiring, contact&nbsp;
         <Link
           href="https://t.me/clearloop"
           className="hover:underline px-1"
           target="_blank"
         >
           @clearloop
-        </Link>{" "}
-        on Telegram for more information!
+        </Link>
+        &nbsp;on Telegram for more information!
       </section>
     </main>
   );
