@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
@@ -12,8 +13,20 @@ export default function Home() {
 
       <section className="flex space-x-4 mt-3">
         <Link href="/bounties" className="hover:underline">
-          Join the revolution with rewards 💰
+          <Button>Join the revolution with rewards 💰</Button>
         </Link>
+      </section>
+
+      <section className="flex space-x-4 mt-8 border border-1 px-6 py-4 rounded-lg">
+        🦀 We're hiring, contact{" "}
+        <Link
+          href="https://t.me/clearloop"
+          className="hover:underline px-1"
+          target="_blank"
+        >
+          @clearloop
+        </Link>{" "}
+        on Telegram for more information!
       </section>
     </main>
   );
