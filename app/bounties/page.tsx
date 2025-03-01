@@ -2,11 +2,12 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import Image from "next/image";
 
 const budgetLabels = [
-  { label: "50 USDC", value: "budget-$50" },
-  { label: "100 USDC", value: "budget-$100" },
-  { label: "150 USDC", value: "budget-$150" },
+  { label: "50 USDC", value: "bounty-$50" },
+  { label: "100 USDC", value: "bounty-$100" },
+  { label: "150 USDC", value: "bounty-$150" },
 ];
 
 export default function Budgets() {
@@ -22,10 +23,13 @@ export default function Budgets() {
           `https://api.github.com/repos/zink-lang/zink/issues?labels=${activeTab}&state=all`
         );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          const errorMessage = await response.text(); // Get the error message from the response
+          throw new Error(
+            `Network response was not ok: ${response.status} - ${errorMessage}`
+          );
         }
-        const budgetIssues = await response.json();
-        setIssues(budgetIssues);
+        const bountyIssues = await response.json();
+        setIssues(bountyIssues);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -38,9 +42,9 @@ export default function Budgets() {
 
   return (
     <div className="flex flex-col h-page max-w-4xl mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4 text-left">Budgets</h1>
+      <h1 className="text-4xl font-bold mb-4 text-left">Bounties</h1>
       <p className="mb-4 text-left">
-        The budget issues on this page are designed to onboard new contributors
+        The bounty issues on this page are designed to onboard new contributors
         to{" "}
         <Link
           href="https://github.com/zink-lang/zink"
@@ -49,10 +53,10 @@ export default function Budgets() {
         >
           Zink
         </Link>
-        . You can also create new issues and propose them as budget items!
+        . You can also create new issues and propose them as bounty items!
       </p>
 
-      {/* Tabs for Budget Labels */}
+      {/* Tabs for Bounty Labels */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           {budgetLabels.map((tab) => (
@@ -89,7 +93,7 @@ export default function Budgets() {
               </a>
               {issue.assignee && (
                 <div className="flex items-center ml-2 space-x-2">
-                  <img
+                  <Image
                     src={issue.assignee.avatar_url}
                     alt={`${issue.assignee.login}'s avatar`}
                     className="w-6 h-6 rounded-full ml-1" // Avatar styling
